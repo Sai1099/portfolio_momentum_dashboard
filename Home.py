@@ -247,12 +247,12 @@ st.subheader("Yearly Returns Summary")
 
 yearly_df = pd.merge(yearly_df,main_dfs,on="year",how="left")
 
-yearly_df["sign"] = np.where(yearly_df["strategy_yearly_return"] > yearly_df["nifty500_yearly_return"],"+","-")
+yearly_df["won"] = np.where(yearly_df["strategy_yearly_return"] > yearly_df["nifty500_yearly_return"],"+","-")
 
 
 
 
-df_display = yearly_df[["year", "strategy_yearly_return","nifty500_yearly_return","sign"]].reset_index(drop=True)
+df_display = yearly_df[["year", "strategy_yearly_return","nifty500_yearly_return","won"]].reset_index(drop=True)
 
 
 
