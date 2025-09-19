@@ -182,7 +182,7 @@ benchmark_return = benchmark_y.pct_change().dropna()
 # If benchmark_returns is a Series
 main_df = benchmark_return.reset_index()
 main_df.columns = ["Date", "returns"]
-main_df["year"] = main_df["Date"].strftime("%Y")
+main_df["year"] = pd.to_datetime(main_df["Date"]).strftime("%Y")
 # Optional: make sure returns are numeric
 main_df["yearly_return"] = pd.to_numeric(main_df["returns"], errors="coerce")
 
