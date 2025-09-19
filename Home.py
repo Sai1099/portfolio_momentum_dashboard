@@ -13,8 +13,12 @@ st.set_page_config(
     layout="wide"
 )
 
+main_d = pd.read_csv("dataa.csv")
+
 st.subheader("Momentum Investing Portfolio Dashboard")
-st.info("Updated on 2025-08-31")
+main_d["my_date"] = pd.to_datetime(main_d["current_date"])
+latest_date = main_d["my_date"].max()
+st.info(f"Updated on {latest_date}")
 
 df = pd.read_csv("dataa.csv")
 df["current_date"] = pd.to_datetime(df["current_date"])
