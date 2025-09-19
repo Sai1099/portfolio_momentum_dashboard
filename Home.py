@@ -264,7 +264,7 @@ st.subheader("📊 Yearly Returns Summary")
 # prepare DataFrame first
 
 yearly_df["Sign"] = np.where(yearly_df["yearly_return"] > 0,"+","-")
-main_dfs["Sign"] = np.where(main_df["returns"] > 0,"+","-")
+main_dfs["Sign"] = np.where(main_dfs["returns"] > 0,"+","-")
 df_display = yearly_df[["year", "yearly_return","Sign"]].reset_index(drop=True)
 df_lef_display = main_dfs[["year","yearly_return","Sign"]].reset_index(drop=True)
 
