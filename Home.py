@@ -102,7 +102,7 @@ bench_metrics = calculate_metrics(bench_cum)
 
 
 data = {
-    "Name": ["Portfolio", "NSE 500"],
+    "Name": ["Strategy", "NSE 500"],
     "CAGR": [port_metrics[0], bench_metrics[0]],
     "Total Return": [port_metrics[1], bench_metrics[1]],
     "Max Drawdown": [port_metrics[2], bench_metrics[2]],
@@ -111,13 +111,13 @@ data = {
 
 kpi_df = pd.DataFrame(data)
 
-# Optional: format as percentages for readability
+
 kpi_df["CAGR"] = kpi_df["CAGR"].apply(lambda x: f"{x:.2%}")
 kpi_df["Total Return"] = kpi_df["Total Return"].apply(lambda x: f"{x:.2%}")
 kpi_df["Max Drawdown"] = kpi_df["Max Drawdown"].apply(lambda x: f"{x:.2%}")
 kpi_df["Sharpe Ratio"] = kpi_df["Sharpe Ratio"].apply(lambda x: f"{x:.2f}")
-
-st.dataframe(kpi_df)
+kpi_df = kpi_df.T()
+st.dataframe(kpi_df,hide_index=True)
 
 
 
@@ -244,6 +244,8 @@ st.altair_chart(dd_chart, use_container_width=True)
 st.subheader("📊 Yearly Returns Summary")
 
 # prepare DataFrame first
+
+#yearly_df["Sign"] = np.where(yearly_df["yearly_return"] > 0,-,+)
 df_display = yearly_df[["year", "yearly_return"]].reset_index(drop=True)
 
 # optional CSS to center and enlarge table font
