@@ -44,7 +44,7 @@ bench_cum = (1 + bench_ret).cumprod()
 fig = go.Figure()
 fig.add_trace(go.Scatter(x=port_cum.index, y=(port_cum-1)*100, name="Portfolio", line_color="blue"))
 fig.add_trace(go.Scatter(x=bench_cum.index, y=(bench_cum-1)*100, name="Benchmark", line_color="orange"))
-fig.update_layout(title="Cumulative Returns (%)(Strategy vs Nifty 500)", xaxis_title="Date", yaxis_title="Return %")
+fig.update_layout(title="Cumulative Returns (Strategy vs Nifty 500)", xaxis_title="Date", yaxis_title="Return %")
 
 st.plotly_chart(fig, use_container_width=True)
 
