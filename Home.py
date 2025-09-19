@@ -13,6 +13,7 @@ st.set_page_config(
     layout="wide"
 )
 
+st.navigation()
 
 st.subheader("Momentum Investing Portfolio Dashboard")
 st.info("Updated on 2025-08-31")
@@ -185,32 +186,15 @@ main_dfs.columns = ["Date", "returns"]
 main_dfs["year"] = pd.to_datetime(main_dfs["Date"]).dt.year
 
 # Optional: make sure returns are numeric
-main_dfs["yearly_return"] = pd.to_numeric(main_dfs["returns"], errors="coerce")
+main_dfs["nifty500_yearly_return"] = pd.to_numeric(main_dfs["returns"], errors="coerce")
 
 
 
 
-yearly_df = yearly_returns.reset_index().rename(columns={"total_portfolio_value": "yearly_return"})
+yearly_df = yearly_returns.reset_index().rename(columns={"total_portfolio_value": "strategy_yearly_return"})
 yearly_df["year"] = yearly_df["current_date"].dt.year
 
-yearly_chart = (
-    alt.Chart(yearly_df)
-    .mark_line(color="darkorange", interpolate="monotone", strokeWidth=3)
-    .encode(
-        x=alt.X("year:O", title="Year"),
-        y=alt.Y("yearly_return:Q", title="Yearly Return", axis=alt.Axis(format="%")),
-        tooltip=[alt.Tooltip("year:O", title="Year"), alt.Tooltip("yearly_return", format=".2%")]
-    )
-    .properties(title="Yearly Returns", height=300)
-    +
-    alt.Chart(yearly_df)
-    .mark_point(size=80, filled=True, color="darkorange")
-    .encode(x="year:O", y="yearly_return:Q", tooltip=["year", alt.Tooltip("yearly_return", format=".2%")])
-    +
-    alt.Chart(yearly_df)
-    .mark_text(align="center", dy=-10, color="black")
-    .encode(x="year:O", y="yearly_return:Q", text=alt.Text("yearly_return:Q", format=".1%"))
-)
+
 
 # ---- Drawdown Chart ----
 # ---- Drawdown Calculation ----
@@ -263,10 +247,17 @@ st.subheader("Yearly Returns Summary")
 
 # prepare DataFrame first
 
-yearly_df["Sign"] = np.where(yearly_df["yearly_return"] > 0,"+","-")
-main_dfs["Sign"] = np.where(main_dfs["returns"] > 0,"+","-")
-df_display = yearly_df[["year", "yearly_return","Sign"]].reset_index(drop=True)
-df_lef_display = main_dfs[["year","yearly_return","Sign"]].reset_index(drop=True)
+yearly_df.merge(main_dfs,on="year")
+
+yearly_df["sign"] = np.where(yearly_df["strategy_yearly_return"] > yearly_df["nifty500_yearly_return"],"+","-")
+
+
+
+
+df_display = yearly_df[["year", "strategy_yearly_return","nifty500_yearly_return","sign"]].reset_index(drop=True)
+
+
+
 
 # optional CSS to center and enlarge table font
 st.markdown("""
@@ -286,19 +277,10 @@ styled = (
     .format({"yearly_return": "{:.2%}"})
     .applymap(color_return, subset=["yearly_return"])
 )
-styled_2 = (
-    df_lef_display
-    .style
-    .format({"yearly_return": "{:.2%}"})
-    .applymap(color_return, subset=["yearly_return"])
-)
-re,le = st.columns([1,1])
-with re:
-    st.subheader("Strategy")
-    st.dataframe(styled, width=400,hide_index=True)
-with le:
-    st.subheader("Nifty 500")
-    st.dataframe(styled_2, width=400,hide_index=True)
+
+
+st.dataframe(styled,hide_index=True)
+
 
 
 
