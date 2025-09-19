@@ -273,7 +273,7 @@ styled = (
     df_display
     .style
     .format({"yearly_return": "{:.2%}"})
-    .applymap(color_return, subset=["yearly_return"])
+    .applymap(color_return, subset=["strategy_yearly_return","nifty500_yearly_return"])
 )
 
 
