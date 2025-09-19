@@ -271,8 +271,9 @@ styled = (
     .format({"yearly_return": "{:.2%}"})
     .applymap(color_return, subset=["yearly_return"])
 )
-
-st.dataframe(styled, width=400,hide_index=True)
+re,le = st.columns([1,1])
+with re:
+    st.dataframe(styled, width=400,hide_index=True)
 
 
 
