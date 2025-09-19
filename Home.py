@@ -270,14 +270,13 @@ def color_return(val):
     return "color: green; font-weight:600" if val >= 0 else "color: red; font-weight:600"
 
 styled = (
-    df_display
-    .style
-    .format({"yearly_return": "{:.2%}"})
-    .applymap(color_return, subset=["strategy_yearly_return","nifty500_yearly_return"])
+    df_display.style
+    .format({"strategy_yearly_return": "{:.2%}", "nifty500_yearly_return": "{:.2%}"})
+    .applymap(color_return, subset=["strategy_yearly_return", "nifty500_yearly_return"])
 )
 
+st.dataframe(styled, hide_index=True)
 
-st.dataframe(styled,hide_index=True)
 
 
 
