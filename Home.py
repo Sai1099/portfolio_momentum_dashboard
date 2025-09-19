@@ -249,8 +249,8 @@ st.subheader("📊 Yearly Returns Summary")
 
 # prepare DataFrame first
 
-#yearly_df["Sign"] = np.where(yearly_df["yearly_return"] > 0,-,+)
-df_display = yearly_df[["year", "yearly_return"]].reset_index(drop=True)
+yearly_df["Sign"] = np.where(yearly_df["yearly_return"] > 0,"+","-")
+df_display = yearly_df[["year", "yearly_return","Sign"]].reset_index(drop=True)
 
 # optional CSS to center and enlarge table font
 st.markdown("""
