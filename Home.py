@@ -180,12 +180,12 @@ yearly_returns = (
 benchmark_y = benchmark.resample("Y").last()
 benchmark_return = benchmark_y.pct_change().dropna()
 # If benchmark_returns is a Series
-main_df = benchmark_return.reset_index()
-main_df.columns = ["Date", "returns"]
-main_df["year"] = pd.to_datetime(main_df["Date"]).dt.year
+main_dfs = benchmark_return.reset_index()
+main_dfs.columns = ["Date", "returns"]
+main_dfs["year"] = pd.to_datetime(main_df["Date"]).dt.year
 
 # Optional: make sure returns are numeric
-main_df["yearly_return"] = pd.to_numeric(main_df["returns"], errors="coerce")
+main_dfs["yearly_return"] = pd.to_numeric(main_df["returns"], errors="coerce")
 
 
 
@@ -264,9 +264,9 @@ st.subheader("📊 Yearly Returns Summary")
 # prepare DataFrame first
 
 yearly_df["Sign"] = np.where(yearly_df["yearly_return"] > 0,"+","-")
-main_df["Sign"] = np.where(main_df["returns"] > 0,"+","-")
+main_dfs["Sign"] = np.where(main_df["returns"] > 0,"+","-")
 df_display = yearly_df[["year", "yearly_return","Sign"]].reset_index(drop=True)
-df_lef_display = main_df[["year","yearly_return","Sign"]].reset_index(drop=True)
+df_lef_display = main_dfs[["year","yearly_return","Sign"]].reset_index(drop=True)
 
 # optional CSS to center and enlarge table font
 st.markdown("""
