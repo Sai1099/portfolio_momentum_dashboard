@@ -294,8 +294,10 @@ styled_2 = (
 )
 re,le = st.columns([1,1])
 with re:
+    st.subheader("Strategy")
     st.dataframe(styled, width=400,hide_index=True)
 with le:
+    st.subheader("Nifty 500")
     st.dataframe(styled_2, width=400,hide_index=True)
 
 
