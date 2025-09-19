@@ -101,7 +101,7 @@ latest_data = main_df[main_df["my_date"] == latest_date]
 only_data = latest_data[latest_data["status"] == "Held"]
 data_to_show = only_data[["ticker","shares_qty","bought_price","current_price","current_value"]]
 st.subheader("Current Holdings")
-st.dataframe(data_to_show)
+st.dataframe(data_to_show,hide_index=True)
 
 # ----------------------------
 # Charts Section
@@ -231,7 +231,7 @@ styled = (
     .applymap(color_return, subset=["yearly_return"])
 )
 
-st.dataframe(styled, use_container_width=True)
+st.dataframe(styled, use_container_width=True,hide_index=True)
 
 
 
