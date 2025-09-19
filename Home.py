@@ -14,7 +14,7 @@ st.set_page_config(
 )
 
 
-st.subheader("📈 Momentum Investing Portfolio Dashboard")
+st.subheader("Momentum Investing Portfolio Dashboard")
 st.info("Updated on 2025-08-31")
 
 df = pd.read_csv("dataa.csv")
@@ -259,7 +259,7 @@ st.altair_chart(dd_chart, use_container_width=True)
 # ----------------------------
 # Yearly Returns Table
 # ----------------------------
-st.subheader("📊 Yearly Returns Summary")
+st.subheader("Yearly Returns Summary")
 
 # prepare DataFrame first
 
