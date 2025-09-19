@@ -231,7 +231,7 @@ styled = (
     .applymap(color_return, subset=["yearly_return"])
 )
 
-st.dataframe(styled, use_container_width=True,hide_index=True)
+st.dataframe(styled, width=400,hide_index=True)
 
 
 
