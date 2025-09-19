@@ -13,8 +13,6 @@ st.set_page_config(
     layout="wide"
 )
 
-st.navigation()
-
 st.subheader("Momentum Investing Portfolio Dashboard")
 st.info("Updated on 2025-08-31")
 
