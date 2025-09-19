@@ -177,6 +177,18 @@ yearly_returns = (
     .pct_change()
     .dropna()
 )
+benchmark_y = benchmark.resample("Y").last()
+benchmark_return = benchmark_y.pct_change().dropna()
+# If benchmark_returns is a Series
+main_df = benchmark_return.reset_index()
+main_df.columns = ["Date", "returns"]
+main_df["year"] = main_df["Date"].strftime("%Y")
+# Optional: make sure returns are numeric
+main_df["yearly_return"] = pd.to_numeric(main_df["returns"], errors="coerce")
+
+
+
+
 yearly_df = yearly_returns.reset_index().rename(columns={"total_portfolio_value": "yearly_return"})
 yearly_df["year"] = yearly_df["current_date"].dt.year
 
@@ -251,7 +263,9 @@ st.subheader("📊 Yearly Returns Summary")
 # prepare DataFrame first
 
 yearly_df["Sign"] = np.where(yearly_df["yearly_return"] > 0,"+","-")
+main_df["Sign"] = np.where(main_df["returns"] > 0,"+","-")
 df_display = yearly_df[["year", "yearly_return","Sign"]].reset_index(drop=True)
+df_lef_display = main_df[["year","yearly_return","Sign"]].reset_index(drop=True)
 
 # optional CSS to center and enlarge table font
 st.markdown("""
@@ -271,10 +285,17 @@ styled = (
     .format({"yearly_return": "{:.2%}"})
     .applymap(color_return, subset=["yearly_return"])
 )
+styled_2 = (
+    df_lef_display
+    .style
+    .format({"yearly_return": "{:.2%}"})
+    .applymap(color_return, subset=["yearly_return"])
+)
 re,le = st.columns([1,1])
 with re:
     st.dataframe(styled, width=400,hide_index=True)
-
+with le:
+    st.dataframe(styled_2, width=400,hide_index=True)
 
 
 
