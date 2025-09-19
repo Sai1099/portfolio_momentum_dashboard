@@ -3,6 +3,7 @@ import pandas as pd
 import altair as alt
 import yfinance as yf
 import plotly.graph_objects as go
+import numpy as np
 
 
 st.set_page_config(
