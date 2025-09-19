@@ -245,7 +245,7 @@ st.subheader("Yearly Returns Summary")
 
 # prepare DataFrame first
 
-yearly_df = pd.merge(yearly_df,main_dfs,on="year",how="inner")
+yearly_df = pd.merge(yearly_df,main_dfs,on="year",how="left")
 
 yearly_df["sign"] = np.where(yearly_df["strategy_yearly_return"] > yearly_df["nifty500_yearly_return"],"+","-")
 
