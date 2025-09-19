@@ -236,7 +236,7 @@ dd_chart = alt.Chart(dd_df).mark_bar(color="red").encode(
 # ----------------------------
 st.altair_chart(monthly_chart, use_container_width=True)
 #st.altair_chart(yearly_chart, use_container_width=True)
-st.altair_chart(dd_chart, use_container_width=True)
+#st.altair_chart(dd_chart, use_container_width=True)
 
 # ----------------------------
 # Yearly Returns Table
