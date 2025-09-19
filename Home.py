@@ -50,9 +50,9 @@ fig.update_layout(
     xaxis_title="Date",
     yaxis_title="Return %",
     legend=dict(
-        orientation="h",   # horizontal
+        orientation="h",  
         yanchor="bottom",
-        y=-0.3,            # move legend further down
+        y=-0.3,           
         xanchor="center",
         x=0.5
     )
@@ -87,17 +87,39 @@ sharpe_ratio = cagr/-max_drawdown
 # Layout
 # ----------------------------
 
+def calculate_metrics(series):
+    total_return = (series.iloc[-1] / series.iloc[0]) - 1
+    years = (series.index[-1] - series.index[0]).days / 365.25
+    cagr = (series.iloc[-1] / series.iloc[0]) ** (1 / years) - 1
+    running_max = series.cummax()
+    drawdown = (series - running_max) / running_max
+    max_drawdown = drawdown.min()
+    sharpe = cagr / abs(max_drawdown) if max_drawdown != 0 else 0
+    return cagr, total_return, max_drawdown, sharpe
+
+port_metrics = calculate_metrics(portfolio)
+bench_metrics = calculate_metrics(bench_cum) 
 
 
+data = {
+    "Name": ["Portfolio", "NSE 500"],
+    "CAGR": [port_metrics[0], bench_metrics[0]],
+    "Total Return": [port_metrics[1], bench_metrics[1]],
+    "Max Drawdown": [port_metrics[2], bench_metrics[2]],
+    "Sharpe Ratio": [port_metrics[3], bench_metrics[3]]
+}
+
+kpi_df = pd.DataFrame(data)
+
+# Optional: format as percentages for readability
+kpi_df["CAGR"] = kpi_df["CAGR"].apply(lambda x: f"{x:.2%}")
+kpi_df["Total Return"] = kpi_df["Total Return"].apply(lambda x: f"{x:.2%}")
+kpi_df["Max Drawdown"] = kpi_df["Max Drawdown"].apply(lambda x: f"{x:.2%}")
+kpi_df["Sharpe Ratio"] = kpi_df["Sharpe Ratio"].apply(lambda x: f"{x:.2f}")
+
+st.dataframe(kpi_df)
 
 
-
-# KPIs in one row
-col1, col2, col3, col4 = st.columns(4)
-col1.metric("CAGR", f"{cagr:.2%}")
-col2.metric("Overall Return", f"{total_return:.2%}")
-col3.metric("Max Drawdown", f"{max_drawdown:.2%}")
-col4.metric("Sharpe Ratio",f"{sharpe_ratio:.2}")
 
 st.divider()
 
