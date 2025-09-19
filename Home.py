@@ -135,6 +135,7 @@ latest_date = main_df["my_date"].max()
 
 latest_data = main_df[main_df["my_date"] == latest_date]
 only_data = latest_data[latest_data["status"] == "Held"]
+only_data["current_value"] = only_data["current_value"].round(1)
 data_to_show = only_data[["ticker","shares_qty","bought_price","current_price","current_value"]]
 st.subheader("Current Holdings")
 st.dataframe(data_to_show,hide_index=True)
