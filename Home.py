@@ -116,7 +116,7 @@ kpi_df["CAGR"] = kpi_df["CAGR"].apply(lambda x: f"{x:.2%}")
 kpi_df["Total Return"] = kpi_df["Total Return"].apply(lambda x: f"{x:.2%}")
 kpi_df["Max Drawdown"] = kpi_df["Max Drawdown"].apply(lambda x: f"{x:.2%}")
 kpi_df["Sharpe Ratio"] = kpi_df["Sharpe Ratio"].apply(lambda x: f"{x:.2f}")
-kpi_df = kpi_df.T()
+kpi_df = kpi_df.T
 st.dataframe(kpi_df,hide_index=True)
 
 
