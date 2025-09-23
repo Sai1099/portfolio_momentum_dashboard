@@ -21,7 +21,7 @@ main_d["my_date"] = pd.to_datetime(main_d["current_date"])
 
 df = pd.read_csv("dataa.csv")
 latest_date = main_d["current_date"].max()
-st.info(f"Updated on {latest_date.strftime('%Y-%m-%d')}")
+st.info(f"Updated on {latest_date}")
 
 
 df["current_date"] = pd.to_datetime(df["current_date"])
