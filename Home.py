@@ -20,7 +20,7 @@ st.subheader("Momentum Investing Portfolio Dashboard")
 main_d["my_date"] = pd.to_datetime(main_d["current_date"])
 
 df = pd.read_csv("dataa.csv")
-latest_date = df["current_date"].max()
+latest_date = main_d["current_date"].max()
 st.info(f"Updated on {latest_date}")
 
 
