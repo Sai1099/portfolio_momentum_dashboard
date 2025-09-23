@@ -92,6 +92,29 @@ sharpe_ratio = cagr/-max_drawdown
 # Layout
 # ----------------------------
 
+def our_cal(main_df):
+    date_column = "current_date"  
+    main_df[date_column] = pd.to_datetime(main_df[date_column])
+    main_df = main_df.sort_values(by=date_column).reset_index(drop=True)
+    main_df["total_portfolio_value"] = pd.to_numeric(main_df["total_portfolio_value"], errors="coerce")
+
+    # ----------------------------
+    # Metrics Calculations
+    # ----------------------------
+    portfolio_value = main_df["total_portfolio_value"]
+
+    total_return = (portfolio_value.iloc[-1] / portfolio_value.iloc[0]) - 1
+    days = (main_df[date_column].iloc[-1] - main_df[date_column].iloc[0]).days
+    years = days / 365.25
+    cagr = (portfolio_value.iloc[-1] / portfolio_value.iloc[0]) ** (1 / years) - 1
+
+    running_max = portfolio_value.cummax()
+    drawdown = (portfolio_value - running_max) / running_max
+    max_drawdown = drawdown.min()
+    sharpe_ratio = cagr/-max_drawdown
+    return cagr,total_return,max_drawdown,sharpe_ratio
+
+
 def calculate_metrics(series):
     total_return = (series.iloc[-1] / series.iloc[0]) - 1
     years = (series.index[-1] - series.index[0]).days / 365.25
@@ -102,7 +125,7 @@ def calculate_metrics(series):
     sharpe = cagr / abs(max_drawdown) if max_drawdown != 0 else 0
     return cagr, total_return, max_drawdown, sharpe
 
-port_metrics = calculate_metrics(portfolio)
+port_metrics = our_cal(main_df)
 bench_metrics = calculate_metrics(bench_cum) 
 
 
