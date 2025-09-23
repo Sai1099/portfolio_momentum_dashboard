@@ -80,7 +80,7 @@ portfolio_value = main_df["total_portfolio_value"]
 
 total_return = (portfolio_value.iloc[-1] / portfolio_value.iloc[0]) - 1
 days = (main_df[date_column].iloc[-1] - main_df[date_column].iloc[0]).days
-years = days / 252
+years = days / 365.25
 cagr = (portfolio_value.iloc[-1] / portfolio_value.iloc[0]) ** (1 / years) - 1
 
 running_max = portfolio_value.cummax()
@@ -94,7 +94,7 @@ sharpe_ratio = cagr/-max_drawdown
 
 def calculate_metrics(series):
     total_return = (series.iloc[-1] / series.iloc[0]) - 1
-    years = (series.index[-1] - series.index[0]).days / 252
+    years = (series.index[-1] - series.index[0]).days / 365.25
     cagr = (series.iloc[-1] / series.iloc[0]) ** (1 / years) - 1
     running_max = series.cummax()
     drawdown = (series - running_max) / running_max
